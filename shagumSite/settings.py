@@ -156,7 +156,7 @@ AWS_DEFAULT_ACL = None
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-BROKER_URL = os.environ.get('BROKER_URL')
+BROKER_URL = 'amqp://fvphdpbq:Xm2zuQpkmJtW57duEw3RM_Q9PlvI7ZJp@wasp.rmq.cloudamqp.com/fvphdpbq'#os.environ.get('BROKER_URL')
 BROKER_POOL_LIMIT = 1
 CELERYBEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 CELERY_RESULT_BACKEND = 'django-db'
