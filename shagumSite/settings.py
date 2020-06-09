@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "crispy_forms",
     'django_cleanup.apps.CleanupConfig',
     'django_celery_beat',
+    'django_celery_results',
     'storages'
 ]
 
@@ -158,6 +159,8 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 BROKER_URL = os.environ.get('BROKER_URL')
 BROKER_POOL_LIMIT = 1
 CELERYBEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'django-cache'
 #CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
