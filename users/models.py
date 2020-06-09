@@ -28,7 +28,7 @@ class Profile(models.Model) :
 
 			img.convert('RGB').save(in_mem_file, format='JPEG')
 
-			img_write - storage.open(self.image.name, 'w+')
+			img_write = storage.open(self.image.name, 'w+')
 
 			img_write.write(in_mem_file.getvalue())
 
