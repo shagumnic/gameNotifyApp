@@ -156,7 +156,7 @@ AWS_DEFAULT_ACL = None
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-BROKER_URL = os.environ.get('CLOUDAMQP_URL')
+CELERY_BROKER_URL = os.environ.get('CLOUDAMQP_URL')
 BROKER_POOL_LIMIT = 1
 CELERYBEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 #CELERY_RESULT_BACKEND = 'redis://localhost:6379'
