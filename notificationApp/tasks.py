@@ -3,6 +3,8 @@ from celery import task, shared_task
 from celery.schedules import crontab
 from notificationApp.models import VideoGame, VideoGamesList
 from django.contrib.auth.models import User
+import requests
+import json
 
 @shared_task()
 def update_discount_rate():
