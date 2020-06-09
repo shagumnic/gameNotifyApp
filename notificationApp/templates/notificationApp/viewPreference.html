@@ -1,0 +1,187 @@
+{% extends "notificationApp/base.html" %}
+{% block content %}
+	<div class="infinite-container">
+    {% for game in resultGame %}
+	    <article class="media content-section mt-2 mb-2 p-2">
+	      <div class="media-body infinite-item">
+	      	<img class="w-50 mt-4 pt-4" src="{{ game.background_image }}">
+	        <div class="article-metadata">
+	          <small class="text-muted">Released date: {{ game.released }}</small>
+	        </div>
+	        <div>
+               <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'videogame-add' pk=user_list.id slug=game.slug %}" target="_blank">Add</a>
+             </div>
+	        <h2><a class="article-title" href="https://rawg.io/games/{{game.slug}}">{{ game.name }}</a></h2>
+	        <p class="article-content"><span class="border border-primary">Metacritic's Score: {{ game.metacritic }}</span></p>
+	      </div>
+	    </article>
+	{% empty %}
+		<h1>Sorry, there is no game like that </h1>
+    {% endfor %}
+    </div>
+    {% if url_next != None %}
+	        <a class = "btn btn-outline-info mb-4 infinite-more-link" href = "?genres={{chosen_genres}}&url_next={{url_next}}">More</a>
+	{% endif %}
+	<div class="loading" style="display: none;">
+    Loading...
+  	</div>
+	<script>
+    var infinite = new Waypoint.Infinite({
+      element: $('.infinite-container')[0]
+    });
+  	</script>
+{% endblock content %}
+
+{% block right_side_bar %}
+	    <form method = "POST" class="sticky-top">
+	    	{%csrf_token %}
+	          <div class="content-section mt-5 p-2"> 
+	            <h3>Filter</h3>
+	            <p class='text-muted'>Pick suitable options.</p>
+	              <div class="list-group">
+	              	<div class="list-group-item list-group-item-action">
+		              	<div class="d-flex w-100 justify-content-between">
+					      <a role ="button" class="mb-1 btn btn-info" data-toggle="collapse" data-target="#genres_collapse" aria-expanded="false" aria-controls="genres_collapse"> Genres </a>
+					    </div>
+					    <div class="collapse multi-collapse" id="genres_collapse">
+						    <div class="form-check">
+				              <input class = "form-check-input" type = "checkbox", value = "action", name = "genres[]" id = "Action" {% if 'action' in chosen_genres%} checked="" {%endif%}>
+				              <label class = "form-check-label {% if 'action' in chosen_genres%} active {%endif%}" for ="Action"> Action </label>
+				            </div>
+				            <div class="form-check">
+				              <input class = "form-check-input" type = "checkbox", value = "strategy", name = "genres[]" id = "Strategy" {% if 'strategy' in chosen_genres%} checked="" {%endif%}>
+				              <label class = "form-check-label {% if 'strategy' in chosen_genres%} active {%endif%}" for ="Strategy"> Strategy </label>
+				            </div>
+				            <div class="form-check">
+				              <input class = "form-check-input" type = "checkbox", value = "role-playing-games-rpg", name = "genres[]" id = "RPG" {% if 'role-playing-games-rpg' in chosen_genres%} checked="" {%endif%}>
+				              <label class = "form-check-label {% if 'role-playing-games-rpg' in chosen_genres%} active {%endif%}" for ="RPG"> RPG </label>
+				            </div>
+				            <div class="form-check">
+				              <input class = "form-check-input" type = "checkbox", value = "shooter", name = "genres[]" id = "Shooter" {% if 'shooter' in chosen_genres%} checked="" {%endif%}>
+				              <label class = "form-check-label {% if 'shooter' in chosen_genres%} active {%endif%}" for ="Shooter"> Shooter </label>
+				            </div>
+				            <div class="form-check">
+				              <input class = "form-check-input" type = "checkbox", value = "adventure", name = "genres[]" id = "Adventure" {% if 'adventure' in chosen_genres%} checked="" {%endif%}>
+				              <label class = "form-check-label {% if 'adventure' in chosen_genres%} active {%endif%}" for ="Adventure"> Adventure </label>
+				            </div>
+				            <div class="form-check">
+				              <input class = "form-check-input" type = "checkbox", value = "puzzle", name = "genres[]" id = "Puzzle" {% if 'puzzle' in chosen_genres%} checked="" {%endif%}>
+				              <label class = "form-check-label {% if 'puzzle' in chosen_genres%} active {%endif%}" for ="Puzzle"> Puzzle </label>
+				            </div>
+				            <div class="form-check">
+				              <input class = "form-check-input" type = "checkbox", value = "racing", name = "genres[]" id = "Racing" {% if 'racing' in chosen_genres%} checked="" {%endif%}>
+				              <label class = "form-check-label {% if 'racing' in chosen_genres%} active {%endif%}" for ="Racing"> Racing </label>
+				            </div>
+				            <div class="form-check">
+				              <input class = "form-check-input" type = "checkbox", value = "sports", name = "genres[]" id = "Sports" {% if 'sports' in chosen_genres%} checked="" {%endif%}>
+				              <label class = "form-check-label {% if 'sports' in chosen_genres%} active {%endif%}" for ="Sports"> Sports </label>
+	          				</div>
+	          				<div class="form-check">
+				              <input class = "form-check-input" type = "checkbox", value = "indie", name = "genres[]" id = "Indie" {% if 'indie' in chosen_genres%} checked="" {%endif%}>
+				              <label class = "form-check-label {% if 'indie' in chosen_genres%} active {%endif%}" for ="Indie"> Indie </label>
+				            </div>
+				            <div class="form-check">
+				              <input class = "form-check-input" type = "checkbox", value = "casual", name = "genres[]" id = "Casual" {% if 'casual' in chosen_genres%} checked="" {%endif%}>
+				              <label class = "form-check-label {% if 'casual' in chosen_genres%} active {%endif%}" for ="Casual"> Casual </label>
+				            </div>
+				            <div class="form-check">
+				              <input class = "form-check-input" type = "checkbox", value = "simulation", name = "genres[]" id = "Simulation" {% if 'simulation' in chosen_genres%} checked="" {%endif%}>
+				              <label class = "form-check-label {% if 'simulation' in chosen_genres%} active {%endif%}" for ="Simulation"> Simulation </label>
+				            </div>
+				            <div class="form-check">
+				              <input class = "form-check-input" type = "checkbox", value = "arcade", name = "genres[]" id = "Arcade" {% if 'arcade' in chosen_genres%} checked="" {%endif%}>
+				              <label class = "form-check-label {% if 'action' in chosen_genres%} active {%endif%}" for ="Arcade"> Arcade </label>
+				            </div>
+				            <div class="form-check">
+				              <input class = "form-check-input" type = "checkbox", value = "platformer", name = "genres[]" id = "Platformer" {% if 'platformer' in chosen_genres%} checked="" {%endif%}>
+				              <label class = "form-check-label {% if 'platformer' in chosen_genres%} active {%endif%}" for ="Platformer"> Platformer </label>
+				            </div>
+				            <div class="form-check">
+				              <input class = "form-check-input" type = "checkbox", value = "massively-multiplayer", name = "genres[]" id = "MassivelyMultiplayer" {% if 'massively-multiplayer' in chosen_genres%} checked="" {%endif%}>
+				              <label class = "form-check-label {% if 'massively-multiplayer' in chosen_genres%} active {%endif%}" for ="MassivelyMultiplayer"> Massively Multiplayer </label>
+				            </div>
+				            <div class="form-check">
+				              <input class = "form-check-input" type = "checkbox", value = "family", name = "genres[]" id = "Family" {% if 'family' in chosen_genres%} checked="" {%endif%}>
+				              <label class = "form-check-label {% if 'family' in chosen_genres%} active {%endif%}" for ="Family"> Family </label>
+				            </div>
+				            <div class="form-check">
+				              <input class = "form-check-input" type = "checkbox", value = "fighting", name = "genres[]" id = "Fighting" {% if 'fighting' in chosen_genres%} checked="" {%endif%}>
+				              <label class = "form-check-label {% if 'fighting' in chosen_genres%} active {%endif%}" for ="Fighting"> Fighting </label>
+				            </div>
+				            <div class="form-check">
+				              <input class = "form-check-input" type = "checkbox", value = "board-games", name = "genres[]" id = "BoardGames" {% if 'board-games' in chosen_genres%} checked="" {%endif%}>
+				              <label class = "form-check-label {% if 'board-games' in chosen_genres%} active {%endif%}" for ="BoardGames"> Board Games </label>
+				            </div>
+				            <div class="form-check">
+				              <input class = "form-check-input" type = "checkbox", value = "card", name = "genres[]" id = "Card" {% if 'card' in chosen_genres%} checked="" {%endif%}>
+				              <label class = "form-check-label {% if 'card' in chosen_genres%} active {%endif%}" for ="Card"> Card </label>
+				            </div>
+				            <div class="form-check">
+				              <input class = "form-check-input" type = "checkbox", value = "educational", name = "genres[]" id = "Educational" {% if 'educational' in chosen_genres%} checked="" {%endif%}>
+				              <label class = "form-check-label {% if 'educational' in chosen_genres%} active {%endif%}" for ="Educational"> Educational </label>
+				            </div>
+				        </div>
+					</div>
+					<div class="list-group-item list-group-item-action">
+		              	<div class="d-flex w-100 justify-content-between">
+					      <a role ="button" class="mb-1 btn btn-info" data-toggle="collapse" data-target="#dates_collapse" aria-expanded="false" aria-controls="dates_collapse">Upcoming within...</a>
+					    </div>
+					    <div lass="collapse multi-collapse" id="dates_collapse">
+						    <div class="form-check">
+				              <input class = "form-check-input" type = "radio", value = "week", name = "day-after" id = "week" {% if dateAfter == 'week' %} checked="" {% endif %}>
+				              <label class = "form-check-label {% if dateAfter == 'week' %} active {% endif %}" for ="week"> A week </label>
+				            </div>
+				            <div class="form-check">
+				              <input class = "form-check-input" type = "radio", value = "month", name = "day-after" id = "month" {% if dateAfter == 'month' %} checked="" {% endif %}>
+				              <label class = "form-check-label {% if dateAfter == 'month' %} active {% endif %}" for ="month" > A month </label>
+				            </div>
+				            <div class="form-check">
+				              <input class = "form-check-input" type = "radio", value = "six_months", name = "day-after" id = "six_months" {% if dateAfter == 'six_months' %} checked="" {% endif %}>
+				              <label class = "form-check-label {% if dateAfter == 'six_months' %} active {% endif %}" for ="six_months"> 6 months </label>
+				            </div>
+				            <div class="form-check">
+				              <input class = "form-check-input" type = "radio", value = "year", name = "day-after" id = "year" {% if dateAfter == 'year' %} checked="" {% endif %}>
+				              <label class = "form-check-label {% if dateAfter == 'year' %} active {% endif %}" for ="year"> A year </label>
+				            </div>
+				        </div>
+			        </div>
+			        <div class="list-group-item list-group-item-action">
+		              	<div class="d-flex w-100 justify-content-between">
+					      <a role ="button" class="mb-1 btn btn-info" data-toggle="collapse" data-target="#pages_collapse" aria-expanded="false" aria-controls="pages_collapse">Result per page</a>
+					    </div>
+					    <div lass="collapse multi-collapse" id="pages_collapse">
+						    <div class="form-check">
+				              <input class = "form-check-input" type = "radio", value = "5", name = "page_size" id = "5" {% if page_size == 5 %} checked="" {% endif %}>
+				              <label class = "form-check-label {% if page_size == 5 %} active {% endif %}" for ="5"> 5 </label>
+				            </div>
+				            <div class="form-check">
+				              <input class = "form-check-input" type = "radio", value = "10", name = "page_size" id = "10" {% if page_size == 10 %} checked="" {% endif %}>
+				              <label class = "form-check-label {% if page_size == 10 %} active {% endif %}" for ="10"> 10 </label>
+				            </div>
+				            <div class="form-check">
+				              <input class = "form-check-input" type = "radio", value = "20", name = "page_size" id = "20" {% if page_size == 20 %} checked="" {% endif %}>
+				              <label class = "form-check-label {% if page_size == 20 %} active {% endif %}" for ="20"> 20 </label>
+				            </div>
+				            <div class="form-check">
+				              <input class = "form-check-input" type = "radio", value = "30", name = "page_size" id = "30" {% if page_size == 30 %} checked="" {% endif %}>
+				              <label class = "form-check-label {% if page_size == 30 %} active {% endif %}" for ="30"> 30 </label>
+				            </div>
+				        </div>
+			        </div>
+			        <span class = 'text-info'> Or search for a specific game </span>
+	              	<div class="list-group-item list-group-item-action">
+		              <div class="input-group p-2">
+						  <div class="input-group-prepend">
+						    <span class="input-group-text" id="inputGroup-sizing-default">Search</span>
+						  </div>
+						  <input type="text" name = "search_game" value="{{request.POST.get.search_game}}" placeholder = "Search for a game here" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+					  </div>
+				  	</div>
+			        <div class="list-group-item list-group-item-action">
+			        	<button class="btn btn-outline-primary" type="submit">Search</button>
+			        </div>
+	              </div>
+	              
+	         </div>
+		</form>
+{% endblock right_side_bar %}

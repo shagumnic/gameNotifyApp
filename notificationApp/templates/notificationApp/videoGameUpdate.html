@@ -1,0 +1,35 @@
+{% extends "notificationApp/base.html" %}
+{% block content %}
+    <form method="POST">
+      {%csrf_token %}
+      <div class="form-group mb-3 mt-5 p-2">
+        <div class="form-check">
+            <input class = "form-check-input", type = "checkbox", value = "notified", name = "discount", id = "features1" {% if game.isDiscount %} checked = '' {% endif %}>
+            <label class = "form-check-label {% if game.isDiscount %} active {% endif %}", for="features1"> Notify for Discount on Steam </label> 
+        </div>
+        <div class="form-check">
+            <input class = "form-check-input", type = "checkbox", value = "notified", name = "released", id = "features2" {% if game.isReleased == False %} disabled {% endif %}>
+            <label class = "form-check-label", for="features2"> Notify when release {% if game.isReleased == False %} (Already Out) {% endif %}</label>
+        </div>
+        <div class="form-check">
+          <label class="text-warning" for="formControlRange">The minimum percentage of discount you want</label>
+          <input type="range" name = "chosen_discount_rate" class="form-control-range" id="formControlRange" min="0" max="100" value = "{% if game.isDiscount %}{{ game.discountrate_set.all.first.chosen_discount_percent }}{% else %}50{% endif %}">
+          <p>Minimum Percentage: <span id="rateOutput"></span>%</p> 
+        </div>
+      </div>
+      <div class="form-group mb-3">
+          <button class= "btn btn-outline-primary" type = "submit">Update</button>
+          <a class = "btn btn-outline-secondary", href = "{% url 'videogame-detail' pk=game.id %}" >Cancel</a>
+      </div>
+    </form>
+    <script type="text/javascript">
+      var slider = document.getElementById("formControlRange");
+      var output = document.getElementById("rateOutput");
+      output.innerHTML = slider.value; // Display the default slider value
+
+      // Update the current slider value (each time you drag the slider handle)
+      slider.oninput = function() {
+        output.innerHTML = this.value;
+      }
+    </script>
+{% endblock content %}

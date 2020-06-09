@@ -1,0 +1,42 @@
+{% extends "notificationApp/base.html" %}
+{% block content %}
+  <h1 class = "mb-4 mt-5 pt-3">Game in {{public_list.name}} ({{page_obj.paginator.count}})</h1>
+    {% for game in page_obj %}
+      <article class="media content-section">
+        <img class="rounded-circle article-img" src="{{ game.videogameslist.user.profile.image.url }}">
+        <div class="media-body">
+          <div class="article-metadata">
+            <h5 class="mr-2">{{ game.videogameslist.user }}</h5>
+            <small class="text-muted">Released Date: {{ game.released_date|date:"F d, Y" }}</small>
+          </div>
+          <h4><a class="article-title" href = "{%url 'videogame-detail' game.id %}">{{ game.name }}</a></h4>
+          <p class="article-content">Genres: {{ game.genres }}</p>
+        </div>
+      </article>
+    {% endfor %}
+    {% if public_list.user == user %}
+              <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'videogameslist-update' public_list.id %}">Update</a>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'videogame-preference' pk=public_list.id %}">Add game</a>
+                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'videogameslist-delete' public_list.id %}">Delete</a>
+              </div>
+    {% endif %}
+  {% if is_paginated %}
+      {% if page_obj.has_previous %}
+        <a class = "btn btn-outline-info mb-4" href = "?page=1">First</a>
+        <a class = "btn btn-outline-info mb-4" href = "?page={{page_obj.previous_page_number}}">Previous Page</a>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range%}
+        {% if page_obj.number == num %}
+          <a class = "btn btn-info mb-4" href = "?page={{num}}">{{num}}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a class = "btn btn-outline-info mb-4" href = "?page={{num}}">{{num}}</a>
+        {% endif %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+        <a class = "btn btn-outline-info mb-4" href = "?page={{page_obj.next_page_number}}">Next Page</a>
+        <a class = "btn btn-outline-info mb-4" href = "?page={{page_obj.paginator.num_pages}}">Last</a>
+      {% endif %}
+  {% endif %}
+{% endblock content %}

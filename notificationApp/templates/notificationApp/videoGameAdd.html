@@ -1,0 +1,52 @@
+{% extends "notificationApp/base.html" %}
+{% block content %}
+  <article class="media content-section mt-2 mb-2 p-2">
+        <img class="rounded-circle article-img" src="{{ newGame.preview_image.url }}">
+        <div class="media-body">
+          <div class="article-metadata">
+            <a class="mr-2" href="{% url 'videogameslist-detail' newGame.videogameslist.id %}">{{ newGame.videogameslist.name }}</a>
+            <small class="text-muted">{{ newGame.released_date|date:"F d, Y" }}</small>
+            {% if object.user == user %}
+              <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'videogame-update' object.id %}">Update</a>
+                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'videogame-delete' object.id %}">Delete</a>
+              </div>
+            {% endif %}
+          </div>
+          <h2 class="article-title">{{ newGame.name }}</h2>
+          <p class="article-content">{{ newGame.description }}</p>
+        </div>
+  </article>
+  <form method="POST">
+    {%csrf_token %}
+    <div class="form-group mb-3">
+      <div class="form-check">
+          <input class = "form-check-input", type = "checkbox", value = "notified", name = "discount", id = "features1" {% if newGame.steamId == '' %} disabled {% endif %}>
+          <label class = "form-check-label", for="features1"> Notify for Discount on Steam {% if newGame.steamId == '' %} (Not on Steam) {% endif %} </label> 
+      </div>
+      <div class="form-check">
+          <input class = "form-check-input", type = "checkbox", value = "notified", name = "released", id = "features2" {% if newGame.isReleased == False %} disabled {% endif %}>
+          <label class = "form-check-label", for="features1"> Notify when release {% if newGame.isReleased == False %} (Already Out) {% endif %}</label>
+      </div>
+      <div class="form-check">
+          <label class="text-warning" for="formControlRange">The minimum percentage of discount you want</label>
+          <input type="range" name = "chosen_discount_rate" class="form-control-range" id="formControlRange" min="0" max="100" value = "50">
+          <p>Minimum Percentage: <span id="rateOutput"></span>%</p>
+      </div>
+    </div>
+    <div class="form-group mb-3">
+        <button class= "btn btn-outline-primary" type = "submit" name = "newItem" value = "{{newGame.id}}">Add</button>
+        <button class = "btn btn-outline-secondary", type = "submit" name = "cancel" value = "{{newGame.id}}">Cancel</a>
+    </div>
+  </form>
+  <script type="text/javascript">
+      var slider = document.getElementById("formControlRange");
+      var output = document.getElementById("rateOutput");
+      output.innerHTML = slider.value; // Display the default slider value
+
+      // Update the current slider value (each time you drag the slider handle)
+      slider.oninput = function() {
+        output.innerHTML = this.value;
+      }
+    </script>
+{% endblock content %}

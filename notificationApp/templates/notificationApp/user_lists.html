@@ -1,0 +1,60 @@
+{% extends "notificationApp/base.html" %}
+{% block content %}
+    <h1 class = "mb-4 mt-5 pt-3">{{view.kwargs.username}}'s lists ({{page_obj.paginator.count}})</h1>
+    {% for list in page_obj %}
+        <article class="media content-section mb-2 mt-2 p-2">
+          <img class="rounded-circle article-img" src="{{ list.user.profile.image.url }}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <h5 class="mr-2">{{ list.user }}</h5>
+              <small class="text-muted"> Is it public: {{ list.isPublic }}</small>
+            </div>
+            {% if list.user == user or list.isPublic %}
+              <h2><a class="article-title" href="{% url 'videogameslist-detail' list.id %}">{{ list.name }}</a></h2>
+            {% else %}
+              <h2 class="article-title">{{ list.name }}</h2>
+            {% endif %}
+          </div>
+        </article>
+    {% endfor %}
+    {% if is_paginated %}
+      {% if page_obj.has_previous %}
+        <a class = "btn btn-outline-info mb-4" href = "?page=1">First</a>
+        <a class = "btn btn-outline-info mb-4" href = "?page={{page_obj.previous_page_number}}">Previous Page</a>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range%}
+        {% if page_obj.number == num %}
+          <a class = "btn btn-info mb-4" href = "?page={{num}}">{{num}}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a class = "btn btn-outline-info mb-4" href = "?page={{num}}">{{num}}</a>
+        {% endif %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+        <a class = "btn btn-outline-info mb-4" href = "?page={{page_obj.next_page_number}}">Next Page</a>
+        <a class = "btn btn-outline-info mb-4" href = "?page={{page_obj.paginator.num_pages}}">Last</a>
+      {% endif %}
+    {% endif %}
+{% endblock content %}
+
+{% block right_side_bar %}
+  <form method = "GET" class="sticky-top">
+        {%csrf_token %}
+            <div class="content-section mt-5 p-2">
+              <p class='text-muted'>Search for a specific list.</p>
+                <div class="list-group">
+                  <div class="list-group-item list-group-item-action">
+                    <div class="input-group p-2">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Search</span>
+                      </div>
+                      <input type="text" name = "search_list" value="{{request.GET.get.search_list}}" placeholder = "Search for a list here" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                  </div>
+                  <div class="list-group-item list-group-item-action">
+                  <button class="btn btn-outline-primary" type="submit">Search</button>
+                </div>
+              </div>
+            </div>
+  </form>
+{% endblock right_side_bar %}

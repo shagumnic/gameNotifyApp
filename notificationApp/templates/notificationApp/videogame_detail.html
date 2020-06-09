@@ -1,0 +1,25 @@
+{% extends "notificationApp/base.html" %}
+{% block content %}
+      <article class="media content-section mt-2 mb-2 p-2">
+        <div class="media-body">
+          <img class="w-50 mt-4 pt-4" src="{{ object.preview_image.url }}">
+          <div class="article-metadata">
+            <a class="mr-2" href="{% url 'videogameslist-detail' object.videogameslist.id %}">{{ object.videogameslist.name }}</a>
+            <small class="text-muted">Released Date: {{ object.released_date|date:"F d, Y" }};</small>
+            <div>
+              <small class="text-muted">Notify when discount: {{ object.isDiscount }} {% if object.isDiscount%} (At least {{ object.discountrate_set.all.first.chosen_discount_percent }}%) {% endif %};</small>
+              <small class="text-muted">Notify when release: {{ object.isReleased }}</small>
+            </div>
+            {% if object.videogameslist.user == user %}
+              <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'videogame-update' list_id=object.videogameslist.id game_pk=object.id %}">Update</a>
+                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'videogame-delete' list_id=object.videogameslist.id game_pk=object.id %}">Delete</a>
+              </div>
+            {% endif %}
+          </div>
+          <h2 class="article-title text-primary">{{ object.name }}</h2>
+          <h5 class="text-info"> Genres: {{object.genres}} </h5>
+          <p class="article-content">{{ object.description }}</p>
+        </div>
+      </article>
+{% endblock content %}

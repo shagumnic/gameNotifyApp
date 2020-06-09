@@ -1,0 +1,16 @@
+{% extends "notificationApp/base.html" %}
+{% block content %}
+    {% for game in gameList %}
+        <article class="media content-section">
+          <img class="rounded-circle article-img" src="{{ gameList.user.profile.image.url }}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ gameList.user }}</a>
+              <small class="text-muted">{{ gameList.game.released_date|date:"F d, Y" }}</small>
+            </div>
+            <h2><a class="article-title" href="{% url 'videogame-detail' gameList.game.id}">{{ gameList.game.name }}</a></h2>
+            <p class="article-content">{{ gameList.game.description }}</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
