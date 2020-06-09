@@ -11,7 +11,7 @@ def update_discount_rate():
     #gamePk = []
 	#chosen_discount_rate_dict = {}
 	for game in VideoGame.objects.all() :
-		if game.isDisount == True :
+		if game.isDiscount == True :
 		#gamePk.append(game.id)
 			if game.steamId not in steamIds :
 				steamIds += game.steamId 
