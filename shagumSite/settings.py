@@ -170,7 +170,7 @@ from celery import Celery
 CELERY_BEAT_SCHEDULE = {
     'update_discount_rate' : {
         'task': 'notificationApp.tasks.update_discount_rate',
-        'schedule': crontab()
+        'schedule': crontab(minute=0, hour=17, day_of_week = 4)
     }
 }
 
