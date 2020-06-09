@@ -37,9 +37,9 @@ def update_discount_rate():
 			if game.isDiscount == True and discount_percent_dict[game.steamId] != None and \
 			(game.discountrate_set.all().first().discount_percent == None or \
 			game.discountrate_set.all().first().discount_percent != discount_percent_dict[game.steamId]):
-				# game.discountrate_set.all().update(discount_percent = discount_percent_dict[game.steamId])
+				game.discountrate_set.all().update(discount_percent = discount_percent_dict[game.steamId])
 				# discount_description = 
-				game.discountrate_set.all().first().update(discount_percent = 1)
+				# game.discountrate_set.all().first().update(discount_percent = 1)
 				# discount_description.discount_percent = 1
 				# discount_description.save()
 

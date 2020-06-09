@@ -155,7 +155,8 @@ AWS_DEFAULT_ACL = None
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-CELERY_BROKER_URL = 'amqp://darkshanic:Omegazero2008@@localhost:5672/shagumhost'
+BROKER_URL = os.environ.get('BROKER_URL')
+BROKER_POOL_LIMIT = 1
 #CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
