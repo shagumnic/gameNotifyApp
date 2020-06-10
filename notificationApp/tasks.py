@@ -5,6 +5,7 @@ from notificationApp.models import VideoGame, VideoGamesList
 from django.contrib.auth.models import User
 import requests
 import json
+from webpush import send_user_notification
 
 @shared_task()
 def update_discount_rate():
@@ -46,6 +47,17 @@ def update_discount_rate():
 				# discount_description.save()
 
 
+@shared_task()
+def notify_push_discount() :
+	for game in VideoGame.objects.all() :
+		if game.discountrate_set.all().first().discount_percent >= game.discountrate_set.all().first().chosen_discount_percent :
+			#do something to notify them about it
+			user = game.videoGamesList.user
+			head = "Dicount Notification"
+			body = "The game %s in your %s is on discount for %s ." % (game.name, game.videoGamesList.name, str(game.discountrate_set.all().first().discount_percent))
+			url = "http://store.steampowered.com/api/appdetails?cc=us&appids=" + game.steamId
+			payload = {'head' : head, 'body' : body, 'url' : url}
+			send_user_notification(user = user, payload = payload, ttl = 3600)
 # @shared_task()
 # def update_released_date() :
 # 	slugs = []

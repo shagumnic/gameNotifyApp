@@ -22,6 +22,7 @@ import users.views as users_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^webpush/', include('webpush.urls')),
     path("", include('notificationApp.urls')),
     path("register/", users_views.register, name = "register"),
     path("profile/", users_views.profile, name = "profile"),

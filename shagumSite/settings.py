@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django_cleanup.apps.CleanupConfig',
     'django_celery_beat',
     'django_celery_results',
+    'webpush',
     'storages'
 ]
 
@@ -170,8 +171,18 @@ from celery import Celery
 CELERY_BEAT_SCHEDULE = {
     'update_discount_rate' : {
         'task': 'notificationApp.tasks.update_discount_rate',
-        'schedule': crontab(minute=0, hour=17, day_of_week = 4)
+        'schedule': crontab(minute=0, hour=17)
+    },
+    'notify_push_discount' : {
+        'task': 'notificationApp.tasks.notify_push_discount',
+        'schedule': crontab()
     }
 }
 
 django_heroku.settings(locals())
+
+WEBPUSH_SETTINGS = {
+    "VAPID_PUBLIC_KEY": os.environ.get("VAPID_PUBLIC_KEY"),
+    "VAPID_PRIVATE_KEY": os.environ.get("VAPID_PRIVATE_KEY"),
+    "VAPID_ADMIN_EMAIL": os.environ.get("EMAIL_USER")
+}
