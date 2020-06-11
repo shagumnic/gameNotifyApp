@@ -6,10 +6,10 @@ from django.contrib.auth.models import User
 import requests
 import json
 from webpush import send_user_notification
+from datetime import datetime, date
 
 @shared_task()
 def update_discount_rate():
-	print("Hello World")
 	steamIds = ''
     #gamePk = []
 	#chosen_discount_rate_dict = {}
@@ -50,26 +50,40 @@ def update_discount_rate():
 @shared_task()
 def notify_push_discount() :
 	for game in VideoGame.objects.all() :
-		if game.discountrate_set.all().first().discount_percent >= game.discountrate_set.all().first().chosen_discount_percent :
-			#do something to notify them about it
-			user = game.videogameslist.user
-			head = "Dicount Notification"
-			body = "The game %s in your %s is on discount for %s ." % (game.name, game.videogameslist.name, str(game.discountrate_set.all().first().discount_percent))
-			url = "http://store.steampowered.com/api/appdetails?cc=us&appids=" + game.steamId
-			payload = {'head' : head, 'body' : body, 'url' : url}
-			send_user_notification(user = user, payload = payload, ttl = 3600)
-# @shared_task()
-# def update_released_date() :
-# 	slugs = []
-# 	for game in VideoGame.objects.all() :
-# 	    #if game.isReleased == True :
-# 	        #gamePk.append(game.id)
-# 	    if game.slug not in slug :
-# 	        slugs.append(slug)
-# 	for slug in slugs :
-# 	    url = "https://api.rawg.io/api/games/" + slug
-# 	    response = requests.request("GET", url)
-# 	    resultGame = json.loads(response.text)
-# 	    released_date = datetime.strptime(resultGame["released"], "%Y-%m-%d").date()
-# 	    if released_date != VideoGame.objects.filter(slug = slug).first() :
-# 	        VideoGame.objects.filter(slug = slug).update(released_date = released_date)
+		if game.isDiscount == True :
+			if game.discountrate_set.all().first().discount_percent >= game.discountrate_set.all().first().chosen_discount_percent :
+				#do something to notify them about it
+				user = game.videogameslist.user
+				head = "Dicount Notification"
+				body = "The game %s in your %s is on discount for %s ." % (game.name, game.videogameslist.name, str(game.discountrate_set.all().first().discount_percent))
+				url = "http://store.steampowered.com/api/appdetails?cc=us&appids=" + game.steamId
+				payload = {'head' : head, 'body' : body, 'url' : url}
+				send_user_notification(user = user, payload = payload, ttl = 3600)
+
+@shared_task()
+def update_released_date() :
+	slugs = set()
+	for game in VideoGame.objects.all() :
+	#if game.isReleased == True :
+	#gamePk.append(game.id)
+		slugs.add(game.slug)
+	for slug in slugs :
+		url = "https://api.rawg.io/api/games/" + slug
+		response = requests.request("GET", url)
+		resultGame = json.loads(response.text)
+		released_date = datetime.strptime(resultGame["released"], "%Y-%m-%d").date()
+		if released_date != VideoGame.objects.filter(slug = slug).first().released_date :
+			VideoGame.objects.filter(slug = slug).update(released_date = released_date)
+
+@shared_task()
+def notify_push_released() :
+	for game in VideoGame.objects.all() :
+		if game.isReleased == True :
+			if game.released_date >= datetime.date.today() :
+				#do something to notify them about it
+				user = game.videogameslist.user
+				head = "Released Notification"
+				body = "The game %s in your %s is already released on %s." % (game.name, game.videogameslist.name, game.released_date.strftime("%Y-%m-%d"))
+				url = "http://store.steampowered.com/api/appdetails?cc=us&appids=" + game.steamId
+				payload = {'head' : head, 'body' : body, 'url' : url}
+				send_user_notification(user = user, payload = payload, ttl = 3600)
