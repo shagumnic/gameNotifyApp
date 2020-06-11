@@ -6,12 +6,6 @@
           <div class="article-metadata">
             <a class="mr-2" href="{% url 'videogameslist-detail' newGame.videogameslist.id %}">{{ newGame.videogameslist.name }}</a>
             <small class="text-muted">{{ newGame.released_date|date:"F d, Y" }}</small>
-            {% if object.user == user %}
-              <div>
-                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'videogame-update' object.id %}">Update</a>
-                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'videogame-delete' object.id %}">Delete</a>
-              </div>
-            {% endif %}
           </div>
           <h2 class="article-title">{{ newGame.name }}</h2>
           <p class="article-content">{{ newGame.description }}</p>
@@ -35,6 +29,8 @@
       </div>
     </div>
     <div class="form-group mb-3">
+        <p>You will have to subscribe in order to receive notification</p>
+        {% webpush_button with_class="btn btn-outline-info" %}
         <button class= "btn btn-outline-primary" type = "submit" name = "newItem" value = "{{newGame.id}}">Add</button>
         <button class = "btn btn-outline-secondary", type = "submit" name = "cancel" value = "{{newGame.id}}">Cancel</a>
     </div>
