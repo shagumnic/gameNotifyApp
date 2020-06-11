@@ -21,14 +21,14 @@ class VideoGame(models.Model) :
 	name = models.CharField(max_length = 200)
 	concurrentPlayers = models.IntegerField(null = True)
 	released_date = models.DateField(null = True)
-	genres = models.CharField(max_length = 200 )
+	genres = models.TextField()
 	rating = models.IntegerField(null = True)
 	description = models.TextField()
 	preview_image = models.ImageField(max_length = 200, null = True, upload_to = 'game_pics')
 	isDiscount = models.BooleanField(default = True)
 	isReleased = models.BooleanField(default = True)
 	videogameslist = models.ForeignKey(VideoGamesList, on_delete = models.CASCADE)
-	tags = models.CharField(max_length = 200, null = True)
+	tags = models.TextField(null = True)
 	def __str__(self):
 		return self.name
 
