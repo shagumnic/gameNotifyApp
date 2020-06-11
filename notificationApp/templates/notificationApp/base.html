@@ -10,6 +10,7 @@
   <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 	<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
   <script src="{% static 'js/shortcuts/infinite.min.js' %}"></script>
+  {% webpush_header %}
 	{% if title %}
         <title>Shagum's Notification Web - {{ title }}</title>
     {% else %}
@@ -21,6 +22,7 @@
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
           <a class="navbar-brand mr-4" href="{% url 'home-notification' %}">Shagum's Notification Web</a>
+          {% webpush_button %}
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
           </button>
