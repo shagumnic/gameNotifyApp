@@ -24,7 +24,7 @@ class VideoGame(models.Model) :
 	genres = models.TextField()
 	rating = models.IntegerField(null = True)
 	description = models.TextField()
-	preview_image = models.ImageField(max_length = 200, null = True, upload_to = 'game_pics')
+	preview_image = models.ImageField(null = True, upload_to = 'game_pics')
 	isDiscount = models.BooleanField(default = True)
 	isReleased = models.BooleanField(default = True)
 	videogameslist = models.ForeignKey(VideoGamesList, on_delete = models.CASCADE)
