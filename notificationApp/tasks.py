@@ -52,7 +52,7 @@ def notify_push_discount() :
 	for game in VideoGame.objects.all() :
 		if game.discountrate_set.all().first().discount_percent >= game.discountrate_set.all().first().chosen_discount_percent :
 			#do something to notify them about it
-			user = game.videoGamesList.user
+			user = game.videogameslist.user
 			head = "Dicount Notification"
 			body = "The game %s in your %s is on discount for %s ." % (game.name, game.videogameslist.name, str(game.discountrate_set.all().first().discount_percent))
 			url = "http://store.steampowered.com/api/appdetails?cc=us&appids=" + game.steamId
