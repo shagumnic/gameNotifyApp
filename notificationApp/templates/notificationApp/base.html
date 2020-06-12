@@ -19,7 +19,7 @@
     {% endif %}
 </head>
 <body>
-	<header class="site-header mb-4">
+	<header class="site-header mb-4 sticky-top">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
           <a class="navbar-brand mr-4" href="{% url 'home-notification' %}">Shagum's Notification Web</a>
@@ -71,7 +71,7 @@
           </div>
           {% block content %}{% endblock %}
         </div>
-        <div class="col-md-4 mt-4">
+        <div class="col-md-4 mt-4 content-section sticky-top">
           {% block right_side_bar %}{% endblock%}
           <div class="form-group mb-3 mt-3">
             <p>You will have to subscribe in order to receive notification:</p>
