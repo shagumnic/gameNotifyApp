@@ -46,41 +46,44 @@
           </div>
         </div>
       </nav>
-    </header>
-    <main role="main" class="container h-100">
-      <div class="row h-100">
-        <div class="col-md-8">
-          <div class = "mt-3 pt-5 ">
-            {% if messages %}
-              <div class="messages">
-                  {% for message in messages %}
-                    {% if message.tags == 'success' %}
-                      <div {% if message.tags %} class="alert alert-success {{ message.tags }}" {% endif %}>
-                          {% if message.tags == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
-                          {{ message }}
-                      </div>
-                    {%elif message.tags == 'error' %}
-                      <div {% if message.tags %} class="alert alert-danger {{ message.tags }}" {% endif %}>
-                          {% if message.tags == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
-                          {{ message }}
-                      </div>
-                    {% endif %}
-                  {% endfor %}
-              </div>
-            {% endif %}
-          </div>
-          {% block content %}{% endblock %}
+  </header>
+  <main role="main" class="container h-100">
+    <div class="row h-100">
+      <div class="col-md-8">
+        <div class = "mt-3 pt-5 ">
+          {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                  {% if message.tags == 'success' %}
+                    <div {% if message.tags %} class="alert alert-success {{ message.tags }}" {% endif %}>
+                        {% if message.tags == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                        {{ message }}
+                    </div>
+                  {%elif message.tags == 'error' %}
+                    <div {% if message.tags %} class="alert alert-danger {{ message.tags }}" {% endif %}>
+                        {% if message.tags == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                        {{ message }}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+            </div>
+          {% endif %}
         </div>
-        <div class="col-md-4 mt-4">
-          {% block right_side_bar %}{% endblock%}
-          <div class="form-group mb-3 mt-3 content-section sticky-top">
+        {% block content %}{% endblock %}
+      </div>
+      <div class="col-md-4 mt-4">
+        {% block right_side_bar %}{% endblock%}
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer mb-4">
+    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+      <div class="container">
             <p>You will have to subscribe in order to receive notification:</p>
             {% webpush_button with_class="btn btn-outline-info" %}
-          </div>
-        </div>
       </div>
-    </main>
-
+    </nav>
+  </footer>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
