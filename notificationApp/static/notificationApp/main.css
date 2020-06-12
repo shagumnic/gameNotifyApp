@@ -82,7 +82,6 @@ a.article-title:hover {
 
 .fixed-bottom-custom {
   position: fixed;
-  /* right: 0; */
   bottom: 0;
   left: 0;
   z-index: 1030;
