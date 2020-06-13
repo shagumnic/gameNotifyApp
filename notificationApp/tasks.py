@@ -38,9 +38,9 @@ def update_discount_rate():
 	if len(discount_percent_dict) != 0 :
 		for game in VideoGame.objects.all() :
 			if game.isDiscount == True and discount_percent_dict[game.steamId] != None and \
-			(game.discountrate_set.all().first().discount_percent == None or \
-			game.discountrate_set.all().first().discount_percent != discount_percent_dict[game.steamId]):
-				game.discountrate_set.all().update(discount_percent = discount_percent_dict[game.steamId])
+			(game.discountrate.discount_percent == None or \
+			game.discountrate.discount_percent != discount_percent_dict[game.steamId]):
+				game.discountrate.update(discount_percent = discount_percent_dict[game.steamId])
 				# discount_description = 
 				# game.discountrate_set.all().first().update(discount_percent = 1)
 				# discount_description.discount_percent = 1
@@ -51,14 +51,14 @@ def update_discount_rate():
 def notify_push_discount() :
 	for game in VideoGame.objects.all() :
 		if game.isDiscount == True :
-			if game.discountrate_set.all().first().discount_percent >= game.discountrate_set.all().first().chosen_discount_percent :
+			if game.discountrate.discount_percent >= game.discountrate.chosen_discount_percent :
 				#do something to notify them about it
 				user = game.videogameslist.user
 				head = "Dicount Notification"
-				body = "The game %s in your %s is on discount for %s ." % (game.name, game.videogameslist.name, str(game.discountrate_set.all().first().discount_percent))
+				body = "The game %s in your %s is on discount for %s ." % (game.name, game.videogameslist.name, str(game.discountrate.discount_percent))
 				url = "http://store.steampowered.com/api/appdetails?cc=us&appids=" + game.steamId
 				payload = {'head' : head, 'body' : body, 'url' : url}
-				send_user_notification(user = user, payload = payload, ttl = 3600)
+				send_user_notification(user = user, payload = payload, ttl = 86400)
 
 @shared_task()
 def update_released_date() :
@@ -86,4 +86,4 @@ def notify_push_released() :
 				body = "The game %s in your %s is already released on %s." % (game.name, game.videogameslist.name, game.released_date.strftime("%Y-%m-%d"))
 				url = "http://store.steampowered.com/api/appdetails?cc=us&appids=" + game.steamId
 				payload = {'head' : head, 'body' : body, 'url' : url}
-				send_user_notification(user = user, payload = payload, ttl = 3600)
+				send_user_notification(user = user, payload = payload, ttl = 86400)

@@ -33,7 +33,7 @@ class VideoGame(models.Model) :
 		return self.name
 
 class DiscountRate(models.Model) :
-	videoGame = models.ForeignKey(VideoGame, on_delete = models.CASCADE)
+	videoGame = models.OneToOneField(VideoGame, on_delete = models.CASCADE)
 	initial = models.CharField(max_length = 200, null = True)
 	final = models.CharField(max_length=200, null = True)
 	discount_percent = models.IntegerField(null = True)

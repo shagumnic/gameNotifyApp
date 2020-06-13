@@ -124,7 +124,8 @@ def viewPreference(request, pk) :
 	return render(request, "notificationApp/viewPreference.html", context)
 
 def about(request):
-    return render(request, 'notificationApp/about.html', {'title': 'About'})
+	author = User.objects.filter(username = "darkshanic").first()
+	return render(request, 'notificationApp/about.html', {'title': 'About', 'author': author})
 
 class VideoGamesListListView(ListView) :
 	model = VideoGamesList
