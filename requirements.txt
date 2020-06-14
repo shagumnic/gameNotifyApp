@@ -27,6 +27,7 @@ idna==2.9
 isort==4.3.21
 jmespath==0.10.0
 kombu==4.6.10
+newrelic==5.14.0.142
 Pillow==7.1.2
 psycopg2==2.8.5
 py-vapid==1.7.0
