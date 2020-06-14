@@ -58,7 +58,7 @@ def notify_push_discount() :
 				body = "The game %s in your %s is on discount for %s ." % (game.name, game.videogameslist.name, str(game.discountrate.discount_percent))
 				url = "http://store.steampowered.com/api/appdetails?cc=us&appids=" + game.steamId
 				payload = {'head' : head, 'body' : body, 'url' : url}
-				send_user_notification(user = user, payload = payload, ttl = 86400)
+				send_user_notification(user = user, payload = payload, ttl = 3600)
 
 @shared_task()
 def update_released_date() :
@@ -86,4 +86,4 @@ def notify_push_released() :
 				body = "The game %s in your %s is already released on %s." % (game.name, game.videogameslist.name, game.released_date.strftime("%Y-%m-%d"))
 				url = "http://store.steampowered.com/api/appdetails?cc=us&appids=" + game.steamId
 				payload = {'head' : head, 'body' : body, 'url' : url}
-				send_user_notification(user = user, payload = payload, ttl = 86400)
+				send_user_notification(user = user, payload = payload, ttl = 3600)
