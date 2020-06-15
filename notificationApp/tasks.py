@@ -79,7 +79,7 @@ def update_released_date() :
 def notify_push_released() :
 	for game in VideoGame.objects.all() :
 		if game.isReleased == True :
-			if game.released_date >= datetime.date.today() :
+			if game.released_date >= datetime.today().date() :
 				#do something to notify them about it
 				user = game.videogameslist.user
 				head = "Released Notification"
