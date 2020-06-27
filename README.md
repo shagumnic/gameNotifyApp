@@ -26,3 +26,4 @@ The website has been deployed to Heroku: https://shagumsite.herokuapp.com/
 - Python Imaging Library (PIL) to help modified and save the profile image and header image of the game.
 - Amazon S3 to help kept the image when deployed the website to Heroku.
 - Steam's API and RAWG's API to get the information about the game.
+- SQLite and PostgreSQL to help create, and query the database's models (User, Profile, VideoGame, VideoGameList)
