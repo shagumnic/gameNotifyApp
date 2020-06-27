@@ -55,7 +55,7 @@ def notify_push_discount() :
 				#do something to notify them about it
 				user = game.videogameslist.user
 				head = "Dicount Notification"
-				body = "The game %s in your %s is on discount for %s ." % (game.name, game.videogameslist.name, str(game.discountrate.discount_percent))
+				body = "The game %s in your %s is on discount for %s %." % (game.name, game.videogameslist.name, str(game.discountrate.discount_percent))
 				url = "http://store.steampowered.com/api/appdetails?cc=us&appids=" + game.steamId
 				payload = {'head' : head, 'body' : body, 'url' : url}
 				send_user_notification(user = user, payload = payload, ttl = 3600)
