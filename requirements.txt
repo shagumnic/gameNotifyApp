@@ -8,7 +8,7 @@ celery==4.4.5
 certifi==2020.4.5.1
 cffi==1.14.0
 chardet==3.0.4
-cryptography==3.2
+cryptography==3.3.2
 dj-database-url==0.5.0
 Django==3.0.7
 django-celery-beat==2.0.0
